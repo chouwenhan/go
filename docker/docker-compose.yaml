@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  go_api:
+    image: golang:1.11.2-alpine3.8
+    container_name: go_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../../go:/go
+    ports:
+      - 3001:8080
+    working_dir: /go/src
+    command: >
+      bash -c "go mod tidy&&
+       go run main.go"
+    tty:
+      true
