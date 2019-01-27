@@ -1,5 +1,12 @@
 version: '3'
 
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.200.0/24
+
 services:
   go_api:
     image: golang:1.11.2-alpine3.8
@@ -12,8 +19,24 @@ services:
     ports:
       - 3001:8080
     working_dir: /go/src
+    depends_on:
+      - couchdb
     command: >
       bash -c "go mod tidy&&
        go run main.go"
     tty:
       true
+  couchdb:
+    image: couchdb:2
+    restart: always
+    container_name: couchdb
+    networks:
+      network:
+        ipv4_address: 192.168.200.10
+    ports:
+      - 5984:5984
+    volumes:
+      - ../data:/opt/couchdb/data
+    environment:
+      COUCHDB_PASSWORD: admin
+      COUCHDB_USER: admin

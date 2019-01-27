@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-
+    models.CreateDatabase("article")
+    // gin start
     router := gin.Default()
-    // test
     router.GET("/ping", func(c *gin.Context) {
         c.JSON(200, gin.H{
             "message": "pong",
@@ -24,7 +24,6 @@ func main() {
     // Primary data initialization
     graphql := router.Group("/graphql")
     {
-        models.InitArticlesData(&models.Articles)
         graphql.Any("/article", controllers.ArticleHandler())
     }
 
