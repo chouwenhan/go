@@ -6,17 +6,24 @@ import (
 var Articles []Article 
 
 type Article struct {
-    ID    int64   `json:"id"`
+    ID    string   `json:"_id"`
     Name  string  `json:"name"`
     Describle  string  `json:"info,omitempty"`
+    Note string `json:"note"`
+}
+
+type CreateArticle struct {
+    Name  string  `json:"name"`
+    Describle  string  `json:"info,omitempty"`
+    Note string `json:"note"`
 }
 
 var ArticleType = graphql.NewObject(
     graphql.ObjectConfig{
         Name: "Article",
         Fields: graphql.Fields{
-            "id": &graphql.Field{
-                Type: graphql.Int,
+            "_id": &graphql.Field{
+                Type: graphql.String,
             },
             "name": &graphql.Field{
                 Type: graphql.String,
@@ -24,11 +31,11 @@ var ArticleType = graphql.NewObject(
             "describle": &graphql.Field{
                 Type: graphql.String,
             },
+            "note": &graphql.Field{
+                Type: graphql.String,
+            },
         },
     },
 )
 
-func InitArticlesData(p *[]Article) {
-    Article1 := Article{ID: 1, Name: "Chicha Morada", Describle: "Chicha morada is a beverage originated in the Andean regions of Perú but is actually consumed at a national level (wiki)"}
-    *p = append(*p, Article1)
-}
+// var ArticleListType = graphql.NewList(ArticleType)
