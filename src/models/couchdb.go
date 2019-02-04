@@ -47,6 +47,17 @@ func CreateDocument(db *couchdb.Database, doc interface{}) (string){
     return theId
 }
 
+func UpdateDocument(db *couchdb.Database, doc interface{}, id string, rev string) (string){
+    fmt.Printf("123")
+    _, err := db.Save(doc, id, rev)
+    fmt.Printf("44")
+    if err != nil {
+        panic(err)
+    }
+    fmt.Printf("Update Document successful")
+    return id
+}
+
 func ReadDocument(db *couchdb.Database, id string) (*Article, error){
     a := Article{}
     _, err := db.Read(id, &a, nil)
@@ -54,6 +65,16 @@ func ReadDocument(db *couchdb.Database, id string) (*Article, error){
         panic(err)
     }
     return &a, err
+}
+
+func Find(db *couchdb.Database, results interface{}, selector interface{}) (error){
+    params := couchdb.FindQueryParams{Selector: selector}
+    err := db.Find(results, &params)
+    // results,_ = fmt.Printf("%+v\n", results)
+    if err != nil {
+        return err
+    }
+    return nil
 }
 
 

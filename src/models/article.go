@@ -3,16 +3,28 @@ package models
 import (
     "github.com/graphql-go/graphql"
 )
-var Articles []Article 
+type Articles struct {
+    Docs []Article `json:"docs"`
+}
 
 type Article struct {
     ID    string   `json:"_id"`
+    Rev   string   `json:"_rev"`
+    Type  string   `json:"type"`
     Name  string  `json:"name"`
     Describle  string  `json:"info,omitempty"`
     Note string `json:"note"`
 }
 
 type CreateArticle struct {
+    Type  string   `json:"type"`
+    Name  string  `json:"name"`
+    Describle  string  `json:"info,omitempty"`
+    Note string `json:"note"`
+}
+
+type UpdateArticle struct {
+    Type  string   `json:"type"`
     Name  string  `json:"name"`
     Describle  string  `json:"info,omitempty"`
     Note string `json:"note"`
@@ -23,6 +35,9 @@ var ArticleType = graphql.NewObject(
         Name: "Article",
         Fields: graphql.Fields{
             "_id": &graphql.Field{
+                Type: graphql.String,
+            },
+            "type": &graphql.Field{
                 Type: graphql.String,
             },
             "name": &graphql.Field{
