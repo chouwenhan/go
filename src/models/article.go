@@ -11,22 +11,22 @@ type Article struct {
     ID    string   `json:"_id"`
     Rev   string   `json:"_rev"`
     Type  string   `json:"type"`
-    Name  string  `json:"name"`
-    Describle  string  `json:"info,omitempty"`
+    Title  string  `json:"title"`
+    Content  string  `json:"info,omitempty"`
     Note string `json:"note"`
 }
 
 type CreateArticle struct {
     Type  string   `json:"type"`
-    Name  string  `json:"name"`
-    Describle  string  `json:"info,omitempty"`
+    Title  string  `json:"title"`
+    Content  string  `json:"info,omitempty"`
     Note string `json:"note"`
 }
 
 type UpdateArticle struct {
     Type  string   `json:"type"`
-    Name  string  `json:"name"`
-    Describle  string  `json:"info,omitempty"`
+    Title  string  `json:"title"`
+    Content  string  `json:"info,omitempty"`
     Note string `json:"note"`
 }
 
@@ -40,10 +40,10 @@ var ArticleType = graphql.NewObject(
             "type": &graphql.Field{
                 Type: graphql.String,
             },
-            "name": &graphql.Field{
+            "title": &graphql.Field{
                 Type: graphql.String,
             },
-            "describle": &graphql.Field{
+            "content": &graphql.Field{
                 Type: graphql.String,
             },
             "note": &graphql.Field{

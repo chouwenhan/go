@@ -48,9 +48,7 @@ func CreateDocument(db *couchdb.Database, doc interface{}) (string){
 }
 
 func UpdateDocument(db *couchdb.Database, doc interface{}, id string, rev string) (string){
-    fmt.Printf("123")
     _, err := db.Save(doc, id, rev)
-    fmt.Printf("44")
     if err != nil {
         panic(err)
     }

@@ -72,10 +72,10 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
             Type:        models.ArticleType,
             Description: "Create new article",
             Args: graphql.FieldConfigArgument{
-                "name": &graphql.ArgumentConfig{
+                "title": &graphql.ArgumentConfig{
                     Type: graphql.NewNonNull(graphql.String),
                 },
-                "describle": &graphql.ArgumentConfig{
+                "content": &graphql.ArgumentConfig{
                     Type: graphql.String,
                 },
                 "note": &graphql.ArgumentConfig{
@@ -83,10 +83,13 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                 },
             },
             Resolve: func(params graphql.ResolveParams) (interface{}, error) {
+                if params.Args["note"] == nil {
+                    params.Args["note"] = ""
+                }
                 article := models.CreateArticle{
                     Type:  "article",
-                    Name:  params.Args["name"].(string),
-                    Describle:  params.Args["describle"].(string),
+                    Title:  params.Args["title"].(string),
+                    Content:  params.Args["content"].(string),
                     Note: params.Args["note"].(string),
                 }
                 db := models.ConnDB("article")
@@ -105,10 +108,10 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                 "_id": &graphql.ArgumentConfig{
                     Type: graphql.NewNonNull(graphql.String),
                 },
-                "name": &graphql.ArgumentConfig{
+                "title": &graphql.ArgumentConfig{
                     Type: graphql.String,
                 },
-                "describle": &graphql.ArgumentConfig{
+                "content": &graphql.ArgumentConfig{
                     Type: graphql.String,
                 },
                 "note": &graphql.ArgumentConfig{
@@ -122,11 +125,11 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                 if err != nil {
                     panic(err)
                 }
-                if params.Args["name"] != nil {
-                    result.Name = params.Args["name"].(string)
+                if params.Args["title"] != nil {
+                    result.Title = params.Args["title"].(string)
                 }
-                if params.Args["describle"] != nil {
-                    result.Describle = params.Args["describle"].(string)
+                if params.Args["content"] != nil {
+                    result.Content = params.Args["content"].(string)
                 }
                 if params.Args["note"] != nil {
                     result.Note = params.Args["note"].(string)
