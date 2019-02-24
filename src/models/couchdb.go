@@ -6,25 +6,28 @@ import (
     "github.com/rhinoman/couchdb-go"
 
     "github.com/rs/xid"
+
 )
+
+var config = ReadConfig()
 
 func Authentication() (*couchdb.Connection, couchdb.BasicAuth) {
     var timeout = time.Duration(500 * time.Millisecond)
-    conn, err := couchdb.NewConnection("192.168.0.105", 5984, timeout)
+    conn, err := couchdb.NewConnection(config.CouchDB_server, config.CouchDB_port, timeout)
     if err != nil {
         panic(err)
     }
-    Bauth := couchdb.BasicAuth{Username: "admin", Password: "admin" }
+    Bauth := couchdb.BasicAuth{Username: config.CouchDB_username, Password: config.CouchDB_password }
     return conn, Bauth
 }
 
 func CreateDatabase(DbName string) (error){
     var timeout = time.Duration(500 * time.Millisecond)
-    conn, err := couchdb.NewConnection("192.168.0.105", 5984, timeout)
+    conn, err := couchdb.NewConnection(config.CouchDB_server, config.CouchDB_port, timeout)
     if err != nil {
         panic(err)
     }
-    Bauth := couchdb.BasicAuth{Username: "admin", Password: "admin" }
+    Bauth := couchdb.BasicAuth{Username: config.CouchDB_username, Password: config.CouchDB_password }
     var auth couchdb.Auth = &Bauth
     err = conn.CreateDB(DbName , auth)
     fmt.Printf("CreateDB successful")
@@ -68,7 +71,6 @@ func ReadDocument(db *couchdb.Database, id string) (*Article, error){
 func Find(db *couchdb.Database, results interface{}, selector interface{}) (error){
     params := couchdb.FindQueryParams{Selector: selector}
     err := db.Find(results, &params)
-    // results,_ = fmt.Printf("%+v\n", results)
     if err != nil {
         return err
     }

@@ -4,7 +4,6 @@ import (
     "github.com/gin-gonic/gin"
     "src/controllers"
     "src/models"
-    "fmt"
 )
 
 // middleware
@@ -36,7 +35,7 @@ func main() {
     // Primary data initialization
     graphql := router.Group("/graphql")
     {
-        fmt.Println("123")
+        graphql.POST("/article/file/:doc_id", controllers.FileHandler)
         graphql.Any("/article", controllers.ArticleHandler())
     }
 

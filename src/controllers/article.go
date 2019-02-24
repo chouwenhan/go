@@ -1,9 +1,6 @@
 package controllers
 
 import (
-    // "math/rand"
-    // "encoding/json"
-    // "fmt"
     "src/models"
     "github.com/graphql-go/graphql"
     "github.com/gin-gonic/gin"
