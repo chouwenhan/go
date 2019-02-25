@@ -23,7 +23,7 @@ services:
       - couchdb
     command: >
       bash -c "go mod tidy&&
-       go run main.go"
+       fresh"
     tty:
       true
   couchdb:
