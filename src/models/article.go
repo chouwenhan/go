@@ -13,21 +13,21 @@ type Article struct {
     Type  string   `json:"type"`
     Title  string  `json:"title"`
     Content  string  `json:"info,omitempty"`
-    Note string `json:"note"`
+    Tags string `json:"tags"`
 }
 
 type CreateArticle struct {
     Type  string   `json:"type"`
     Title  string  `json:"title"`
     Content  string  `json:"info,omitempty"`
-    Note string `json:"note"`
+    Tags string `json:"tags"`
 }
 
 type UpdateArticle struct {
     Type  string   `json:"type"`
     Title  string  `json:"title"`
     Content  string  `json:"info,omitempty"`
-    Note string `json:"note"`
+    Tags string `json:"tags"`
 }
 
 var ArticleType = graphql.NewObject(
@@ -46,7 +46,7 @@ var ArticleType = graphql.NewObject(
             "content": &graphql.Field{
                 Type: graphql.String,
             },
-            "note": &graphql.Field{
+            "tags": &graphql.Field{
                 Type: graphql.String,
             },
         },

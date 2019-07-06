@@ -75,19 +75,19 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                 "content": &graphql.ArgumentConfig{
                     Type: graphql.String,
                 },
-                "note": &graphql.ArgumentConfig{
+                "tags": &graphql.ArgumentConfig{
                     Type: graphql.String,
                 },
             },
             Resolve: func(params graphql.ResolveParams) (interface{}, error) {
-                if params.Args["note"] == nil {
-                    params.Args["note"] = ""
+                if params.Args["tags"] == nil {
+                    params.Args["tags"] = ""
                 }
                 article := models.CreateArticle{
                     Type:  "article",
                     Title:  params.Args["title"].(string),
                     Content:  params.Args["content"].(string),
-                    Note: params.Args["note"].(string),
+                    Tags: params.Args["tags"].(string),
                 }
                 db := models.ConnDB("article")
                 id := models.CreateDocument(db, article)
@@ -111,7 +111,7 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                 "content": &graphql.ArgumentConfig{
                     Type: graphql.String,
                 },
-                "note": &graphql.ArgumentConfig{
+                "tags": &graphql.ArgumentConfig{
                     Type: graphql.String,
                 },
             },
@@ -128,8 +128,8 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                 if params.Args["content"] != nil {
                     result.Content = params.Args["content"].(string)
                 }
-                if params.Args["note"] != nil {
-                    result.Note = params.Args["note"].(string)
+                if params.Args["tags"] != nil {
+                    result.Tags = params.Args["tags"].(string)
                 }
                 id = models.UpdateDocument(db, result, id, result.Rev)
                 result, err = models.ReadDocument(db, id)
