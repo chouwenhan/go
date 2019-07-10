@@ -14,15 +14,15 @@ var queryType = graphql.NewObject(graphql.ObjectConfig{
            http://localhost:8080/product?query={product(id:1){name,info,price}}
         */
         "article": &graphql.Field{
-            Type:        models.ArticleType,
+            Type:  models.ArticleType,
             Description: "Get article by id",
             Args: graphql.FieldConfigArgument{
-                "id": &graphql.ArgumentConfig{
+                "_id": &graphql.ArgumentConfig{
                     Type: graphql.String,
                 },
             },
             Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-                id, ok := p.Args["id"].(string)
+                id, ok := p.Args["_id"].(string)
                 if ok {
                     // Find product
                     db := models.ConnDB("article")
@@ -36,7 +36,7 @@ var queryType = graphql.NewObject(graphql.ObjectConfig{
             },
         },
         "article_list": &graphql.Field{
-            Type:    graphql.NewList(models.ArticleType),
+            Type:  graphql.NewList(models.ArticleType),
             Description: "Get article list",
             Args: graphql.FieldConfigArgument{
                 "selector": &graphql.ArgumentConfig{
@@ -66,7 +66,7 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
         http://localhost:8080/product?query=mutation+_{create(name:"Inca Kola",info:"Inca Kola is a soft drink that was created in Peru in 1935 by British immigrant Joseph Robinson Lindley using lemon verbena (wiki)",price:1.99){id,name,info,price}}
         */
         "createArticle": &graphql.Field{
-            Type:        models.ArticleType,
+            Type:  models.ArticleType,
             Description: "Create new article",
             Args: graphql.FieldConfigArgument{
                 "title": &graphql.ArgumentConfig{
@@ -99,7 +99,7 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
             },
         },
         "updateArticle": &graphql.Field{
-            Type:        models.ArticleType,
+            Type:  models.ArticleType,
             Description: "Update article",
             Args: graphql.FieldConfigArgument{
                 "_id": &graphql.ArgumentConfig{
@@ -137,6 +137,26 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                     panic(err)
                 }
                 return result, nil
+            },
+        },
+        "deleteArticle": &graphql.Field{
+            Type:  models.ArticleType,
+            Description: "Delete article by id",
+            Args: graphql.FieldConfigArgument{
+                "_id": &graphql.ArgumentConfig{
+                    Type: graphql.String,
+                },
+            },
+            Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+                id, ok := p.Args["_id"].(string)
+                if ok {
+                    // Find product
+                    db := models.ConnDB("article")
+                    result, _ := models.ReadDocument(db, id)
+                    message := models.DeleteDocument(db, id, result.Rev)
+                    return message, nil
+                }
+                return ok, nil
             },
         },
     },

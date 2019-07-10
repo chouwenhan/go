@@ -49,6 +49,9 @@ var ArticleType = graphql.NewObject(
             "tags": &graphql.Field{
                 Type: graphql.String,
             },
+            "message": &graphql.Field{
+                Type: graphql.String,
+            },
         },
     },
 )

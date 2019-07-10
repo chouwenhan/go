@@ -77,4 +77,11 @@ func Find(db *couchdb.Database, results interface{}, selector interface{}) (erro
     return nil
 }
 
-
+func DeleteDocument(db *couchdb.Database, id string, rev string) (string){
+    _, err := db.Delete(id, rev)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Printf("Delete Document successful")
+    return "Delete successful"
+}
