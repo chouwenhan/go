@@ -8,12 +8,21 @@ type Articles struct {
 }
 
 type Article struct {
-    ID    string   `json:"_id"`
-    Rev   string   `json:"_rev"`
-    Type  string   `json:"type"`
+    ID    string  `json:"_id"`
+    Rev   string  `json:"_rev"`
+    Type  string  `json:"type"`
     Title  string  `json:"title"`
     Content  string  `json:"info,omitempty"`
-    Tags string `json:"tags"`
+    Tags string  `json:"tags"`
+    Attachments map[string]Attachment  `json:"_attachments"`
+}
+
+type Attachment struct {
+    ContentType string `json:"content_type"`
+    Revpos int `json:"revpos"`
+    Digest string `json:"digest"`
+    Length int `json:"length"`
+    Stub bool `json:"stub"`
 }
 
 type CreateArticle struct {

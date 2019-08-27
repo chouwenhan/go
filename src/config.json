@@ -1,5 +1,5 @@
 {
-    "CouchDB_server": "192.168.0.105",
+    "CouchDB_server": "35.184.71.189",
     "CouchDB_port": 5984,
     "CouchDB_username": "admin",
     "CouchDB_password": "admin"

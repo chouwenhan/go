@@ -5,7 +5,9 @@ import (
     "github.com/graphql-go/graphql"
     "github.com/gin-gonic/gin"
     "github.com/graphql-go/handler"
+    "github.com/davecgh/go-spew/spew"
 )
+
 
 var queryType = graphql.NewObject(graphql.ObjectConfig{
     Name: "Query",
@@ -27,6 +29,7 @@ var queryType = graphql.NewObject(graphql.ObjectConfig{
                     // Find product
                     db := models.ConnDB("article")
                     result, err := models.ReadDocument(db, id)
+                    spew.Dump(result)
                     if err != nil {
                         panic(err)
                     }
