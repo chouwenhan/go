@@ -14,7 +14,7 @@ type Article struct {
     Title  string  `json:"title"`
     Content  string  `json:"info,omitempty"`
     Tags string  `json:"tags"`
-    Attachments map[string]Attachment  `json:"_attachments"`
+    Attachments map[string]Attachment  `json:"_attachments,omitempty"`
 }
 
 type Attachment struct {
@@ -60,6 +60,9 @@ var ArticleType = graphql.NewObject(
             },
             "message": &graphql.Field{
                 Type: graphql.String,
+            },
+            "_attachments": &graphql.Field{
+                Type:  JSON,
             },
         },
     },

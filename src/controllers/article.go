@@ -134,6 +134,7 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                 if params.Args["tags"] != nil {
                     result.Tags = params.Args["tags"].(string)
                 }
+                spew.Dump(result)
                 id = models.UpdateDocument(db, result, id, result.Rev)
                 result, err = models.ReadDocument(db, id)
                 if err != nil {
