@@ -6,6 +6,7 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/graphql-go/handler"
     "github.com/davecgh/go-spew/spew"
+    "time"
 )
 
 
@@ -91,6 +92,7 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                     Title:  params.Args["title"].(string),
                     Content:  params.Args["content"].(string),
                     Tags: params.Args["tags"].(string),
+                    Date: int(time.Now().Unix()),
                 }
                 db := models.ConnDB("article")
                 id := models.CreateDocument(db, article)
@@ -134,6 +136,7 @@ var mutationType = graphql.NewObject(graphql.ObjectConfig{
                 if params.Args["tags"] != nil {
                     result.Tags = params.Args["tags"].(string)
                 }
+                result.Date = int(time.Now().Unix())
                 spew.Dump(result)
                 id = models.UpdateDocument(db, result, id, result.Rev)
                 result, err = models.ReadDocument(db, id)

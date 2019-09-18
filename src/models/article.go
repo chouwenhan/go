@@ -14,6 +14,7 @@ type Article struct {
     Title  string  `json:"title"`
     Content  string  `json:"info,omitempty"`
     Tags string  `json:"tags"`
+    Date int  `json:"date"`
     Attachments map[string]Attachment  `json:"_attachments,omitempty"`
 }
 
@@ -30,6 +31,7 @@ type CreateArticle struct {
     Title  string  `json:"title"`
     Content  string  `json:"info,omitempty"`
     Tags string `json:"tags"`
+    Date int  `json:"date"`
 }
 
 type UpdateArticle struct {
@@ -37,6 +39,7 @@ type UpdateArticle struct {
     Title  string  `json:"title"`
     Content  string  `json:"info,omitempty"`
     Tags string `json:"tags"`
+    Date int  `json:"date"`
 }
 
 var ArticleType = graphql.NewObject(
@@ -60,6 +63,9 @@ var ArticleType = graphql.NewObject(
             },
             "message": &graphql.Field{
                 Type: graphql.String,
+            },
+            "date": &graphql.Field{
+                Type: graphql.Int,
             },
             "_attachments": &graphql.Field{
                 Type:  JSON,
